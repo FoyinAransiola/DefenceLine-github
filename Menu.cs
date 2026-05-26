@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace defence_line_form
 {
-    public partial class Form1 : Form
+    public partial class Menu : Form
     {
-        public Form1()
+        public Menu()
         {
             InitializeComponent();
         }
