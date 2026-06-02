@@ -19,7 +19,7 @@ namespace defence_line_form
 
 
         public Sprite(int newX, int newY, int newHeight, int newWidth, int newSpeed)
-        {
+        {// Constructor 
             this.positionX = newX;
             this.positionY = newY;
             this.height = newHeight;
@@ -27,6 +27,7 @@ namespace defence_line_form
             this.speed = newSpeed;
         }
 
+        // Getters
         public int getPositionX() 
         { 
             return positionX;
@@ -52,7 +53,7 @@ namespace defence_line_form
             return speed;
         }
 
-
+        // Setters
         public void setPositionX(int newX)
         {
             positionX = newX;
@@ -78,6 +79,37 @@ namespace defence_line_form
             speed = newSpeed;
         }
 
+        public void setImage(string newImage)
+        {
+            if (newImage != null)
+            {
+                this.spriteimage = Image.FromFile(newImage);
+            }
+            else
+            {
+                this.spriteimage = null;
+            }
+        }
 
+        // Methods (Movement)
+        public void movesprite(string direction, EventArgs e)
+        {
+            if (direction == "left" && positionX > 0)
+            {
+                positionX -= speed;
+            }
+            else if (direction == "right" )
+            {
+                positionX += speed;
+            }
+            else if (direction == "up" && positionY > 0)
+            {
+                positionY -= speed;
+            }
+            else if (direction == "down" )
+            {
+                positionY += speed;
+            }
+        }
     }
 }

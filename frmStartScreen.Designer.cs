@@ -35,8 +35,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Old English Text MT", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(103, 82);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(124, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(570, 114);
             this.label1.TabIndex = 0;
@@ -45,7 +47,7 @@
             // Startbutton
             // 
             this.Startbutton.Font = new System.Drawing.Font("Microsoft YaHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Startbutton.Location = new System.Drawing.Point(323, 317);
+            this.Startbutton.Location = new System.Drawing.Point(317, 269);
             this.Startbutton.Name = "Startbutton";
             this.Startbutton.Size = new System.Drawing.Size(137, 40);
             this.Startbutton.TabIndex = 1;
@@ -57,6 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::defence_line_form.Properties.Resources.defencelinebg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.Startbutton);

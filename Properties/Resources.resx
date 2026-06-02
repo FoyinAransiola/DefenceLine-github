@@ -124,4 +124,7 @@
   <data name="firstMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\firstMap.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="defencelinebg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\defencelinebg.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

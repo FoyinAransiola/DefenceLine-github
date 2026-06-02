@@ -73,6 +73,16 @@ namespace defence_line_form.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap defencelinebg {
+            get {
+                object obj = ResourceManager.GetObject("defencelinebg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap firstMap {
             get {
                 object obj = ResourceManager.GetObject("firstMap", resourceCulture);
