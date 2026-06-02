@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace defence_line_form
 {
-    public partial class Menu : Form
+    public partial class frmGameScreen : Form
     {
-        public Menu()
+        private Enemy enemy;
+
+
+        public frmGameScreen()
         {
             InitializeComponent();
+        }
+
+        private void frmGameScreen__Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

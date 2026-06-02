@@ -46,14 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu.cs">
+    <Compile Include="Enemy.cs" />
+    <Compile Include="frmGameScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <Compile Include="frmGameScreen.Designer.cs">
+      <DependentUpon>frmGameScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStartScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStartScreen.Designer.cs">
+      <DependentUpon>frmStartScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sprite.cs" />
+    <EmbeddedResource Include="frmGameScreen.resx">
+      <DependentUpon>frmGameScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStartScreen.resx">
+      <DependentUpon>frmStartScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +76,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -75,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\360_F_807695332_qzxnIJBcodLHkkZz79ePA6NDYGsbt327.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\firstMap.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
