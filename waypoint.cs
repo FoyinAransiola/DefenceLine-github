@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace defence_line_form
 {
-    internal class waypoint
+    internal class waypoint 
     {
         public int coordinateX;
         public int coordinateY;

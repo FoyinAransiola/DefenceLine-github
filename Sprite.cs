@@ -52,6 +52,10 @@ namespace defence_line_form
         {
             return speed;
         }
+        public Image getImage()
+        {
+            return spriteimage;
+        }
 
         // Setters
         public void setPositionX(int newX)
@@ -91,25 +95,7 @@ namespace defence_line_form
             }
         }
 
-        // Methods (Movement)
-        public void movesprite(string direction, EventArgs e)
-        {
-            if (direction == "left" && positionX > 0)
-            {
-                positionX -= speed;
-            }
-            else if (direction == "right" )
-            {
-                positionX += speed;
-            }
-            else if (direction == "up" && positionY > 0)
-            {
-                positionY -= speed;
-            }
-            else if (direction == "down" )
-            {
-                positionY += speed;
-            }
-        }
+        
+        
     }
 }
