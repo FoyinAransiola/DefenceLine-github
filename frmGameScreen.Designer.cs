@@ -41,9 +41,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::defence_line_form.Properties.Resources.firstMap;
+            this.BackgroundImage = global::defence_line_form.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.DoubleBuffered = true;
             this.Name = "frmGameScreen";
             this.Text = "frmGameScreen";
             this.Load += new System.EventHandler(this.frmGameScreen__Load);

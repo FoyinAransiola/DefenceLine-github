@@ -53,11 +53,12 @@ namespace defence_line_form
                 setPositionY(getPositionY() - getSpeed());
             }
 
-            // checking is enemy sprite has reached waypoint 
-            if (getPositionX() == target.coordinateX && getPositionY() == target.coordinateY)
+            // checking is enemy sprite has reached waypoint         
+            if ( getPositionX() >= target.coordinateX - 3 && getPositionX() <= target.coordinateX + 3 &&
+                getPositionY() >= target.coordinateY - 3 && getPositionY() <= target.coordinateY + 3)
             {
-                currentWaypointIndex++;
-            }         
+                currentWaypointIndex = currentWaypointIndex + 1;
+            }
         }
 
         public bool endReached()// this checks if the enemy has reached every waypoint 

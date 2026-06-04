@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="360_F_807695332_qzxnIJBcodLHkkZz79ePA6NDYGsbt327" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\360_F_807695332_qzxnIJBcodLHkkZz79ePA6NDYGsbt327.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="defencelinebg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\defencelinebg.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="firstMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\firstMap.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="defencelinebg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\defencelinebg.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="360_F_807695332_qzxnIJBcodLHkkZz79ePA6NDYGsbt327" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\360_F_807695332_qzxnIJBcodLHkkZz79ePA6NDYGsbt327.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

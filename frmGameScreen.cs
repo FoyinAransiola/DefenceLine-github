@@ -25,16 +25,18 @@ namespace defence_line_form
         {
             List<waypoint> waypoints = new List<waypoint>
             {
-                new waypoint(100,100),
-                new waypoint(150,150),
-                new waypoint(400,400)
+                new waypoint(316, 252),
+                new waypoint(316, 84),
+                new waypoint(524, 84),
+                new waypoint(524, 370),
+                new waypoint(727, 370)
             };
 
-            enemy = new Enemy(50, 100, 40, 40, 2, waypoints);
+            enemy = new Enemy(12, 243, 25,25 , 1, waypoints);
 
             // game timer setup
             Timer gameTimer = new Timer();
-            gameTimer.Interval = 20;
+            gameTimer.Interval = 16;
             gameTimer.Tick += gameTimerEvent;
             gameTimer.Start();
 
@@ -51,6 +53,16 @@ namespace defence_line_form
         {
             base.OnPaint(e);
             enemy.Draw(e.Graphics);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
