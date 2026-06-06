@@ -12,7 +12,12 @@ namespace defence_line_form
 {
     public partial class frmGameScreen : Form
     {
-        private Enemy enemy;
+        private List<Enemy> enemies = new List<Enemy>();// list that holds all the enemy objects in the game
+        private List<waypoint> waypoints;//List that holds all the waypoints for enemy pathfinding
+        private int totalenemies = 10; // total number of enemies to spawn into the game screen
+        private int spawnedEnemyCount = 0; // counter to keep track of how many enemies have been spawned into the game screen
+        private int spawnInterval = 60; // time interval between enemy spawns in game timer ticks (60 ticks = 1second)
+        private int spawnCounter = 0; // keep track of time passed in game timer ticks to determine when to spawn next enemy 
 
 
         public frmGameScreen()
@@ -23,8 +28,8 @@ namespace defence_line_form
 
         private void frmGameScreen__Load(object sender, EventArgs e)
         {
-            List<waypoint> waypoints = new List<waypoint>
-            {
+            waypoints = new List<waypoint>
+            {//list of waypoint coordinates that define enemy path
                 new waypoint(316, 252),
                 new waypoint(316, 84),
                 new waypoint(524, 84),
@@ -32,7 +37,6 @@ namespace defence_line_form
                 new waypoint(727, 370)
             };
 
-            enemy = new Enemy(12, 243, 25,25 , 1, waypoints);
 
             // game timer setup
             Timer gameTimer = new Timer();
@@ -45,24 +49,34 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
-            enemy.move();
+            if (spawnedEnemyCount < totalenemies)// checks if the number of spawned enemies is less that the total number of enemies to spawn before spawning the next enemy (preventing infinite spawning)
+            {
+                spawnCounter++; // incremented every tick
+                if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
+                {
+                    enemies.Add(new Enemy(12, 243, 25, 25, 1, waypoints)); // spawn new enemy at starting position 
+                    spawnedEnemyCount++;
+                    spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
+                }
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.move(); // moves each enemy along path using waypoints
+            }
             this.Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            enemy.Draw(e.Graphics);
+            foreach (Enemy enemy in enemies)// draws each enemy on the game screen at its current position
+            {
+                enemy.Draw(e.Graphics);
+            }
+            
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
