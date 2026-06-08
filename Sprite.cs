@@ -95,6 +95,16 @@ namespace defence_line_form
             }
         }
 
+        // Dispose the loaded image to free resources when the sprite is removed
+        public void DisposeImage()
+        {
+            if (spriteimage != null)
+            {
+                spriteimage.Dispose();
+                spriteimage = null;
+            }
+        }
+
         
         
     }

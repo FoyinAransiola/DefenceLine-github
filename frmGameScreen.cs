@@ -49,7 +49,9 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
-            if (spawnedEnemyCount < totalenemies)// checks if the number of spawned enemies is less that the total number of enemies to spawn before spawning the next enemy (preventing infinite spawning)
+            if (spawnedEnemyCount < totalenemies)
+            // checks if the number of spawned enemies is less that the total number of
+            // enemies to spawn before spawning the next enemy (preventing infinite spawning)
             {
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
@@ -64,6 +66,17 @@ namespace defence_line_form
             {
                 enemy.move(); // moves each enemy along path using waypoints
             }
+
+            // Remove enemies that reached the final waypoint and dispose their images
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                if (enemies[i].endReached())
+                {
+                    enemies[i].DisposeImage();
+                    enemies.RemoveAt(i);
+                }
+            }
+
             this.Invalidate();
         }
 
