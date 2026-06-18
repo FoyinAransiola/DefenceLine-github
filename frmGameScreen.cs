@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace defence_line_form
         {
             InitializeComponent();
             this.DoubleBuffered = true;
+            
         }
 
         private void frmGameScreen__Load(object sender, EventArgs e)
@@ -56,7 +58,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(12, 243, 25, 25, 1, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 1, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -89,6 +91,8 @@ namespace defence_line_form
             }
             
         }
+
+        
 
 
     }
