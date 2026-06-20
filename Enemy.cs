@@ -23,8 +23,8 @@ namespace defence_line_form
             setImage("enemydemo.jpeg"); // uses Sprite set image method
         }
 
-        // waypoint movement method for enemy pathfinding
-        public void move()
+       
+        public void move()// this method checks if the enemy has reached the waypoint and moves the enemy towards the next waypoint if it has not reached the last waypoint
         {
             if ( currentWaypointIndex >= waypoints.Count) // this ensures the enemy stops after reaching the last waypoint
             {
