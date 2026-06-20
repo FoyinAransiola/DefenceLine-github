@@ -15,7 +15,7 @@ namespace defence_line_form
         private int height;
         private int width;
         private int speed;
-
+        private string currentDirection = "none";
 
 
         public Sprite(int newX, int newY, int newHeight, int newWidth, int newSpeed)
@@ -56,12 +56,17 @@ namespace defence_line_form
         {
             return spriteimage;
         }
+        public string getcCurrentDirection()
+        {
+            return currentDirection;
+        }
 
         // Setters
         public void setPositionX(int newX)
         {
             positionX = newX;
         } 
+
 
         public void setPositionY(int newY)
         {
@@ -95,6 +100,11 @@ namespace defence_line_form
             }
         }
 
+        public void setCurrentDirection(string newDirection)
+        {
+            this.currentDirection = newDirection;
+        }
+
         // Dispose the loaded image to free resources when the sprite is removed
         public void DisposeImage()
         {
@@ -106,6 +116,8 @@ namespace defence_line_form
         }
 
         
-        
+
+
+
     }
 }

@@ -13,14 +13,18 @@ namespace defence_line_form
     {
         private int currentWaypointIndex = 0;
         private List<waypoint> waypoints;
-        
+        private List<string> enemyMovement = new List<string>();
+        int steps = 0;
+        int slowDownFrameRate = 0;
+
 
 
         public Enemy(int newX, int newY, int newHeight, int newWidth, int newSpeed,List<waypoint> newWaypoint)
            : base(newX , newY, newHeight,newHeight,newSpeed)
         {
             this.waypoints = newWaypoint;
-            setImage("enemydemo.jpeg"); // uses Sprite set image method
+            enemyMovement = Directory.GetFiles("Goblins", "*.png").ToList();
+            setImage(enemyMovement[60]); // uses Sprite set image method
         }
 
        
@@ -32,6 +36,28 @@ namespace defence_line_form
             }
 
             waypoint target = waypoints[currentWaypointIndex]; // getting next waypoint to move to 
+
+
+            if (getPositionX() < target.coordinateX)
+            {
+                setCurrentDirection("Right");
+                AnimateEnemy(60, 79);
+            }
+            if (getPositionX() > target.coordinateX)
+            {
+                setCurrentDirection("Left");
+                AnimateEnemy(40, 59);
+            }
+            if (getPositionY() < target.coordinateY)
+            {
+                setCurrentDirection("Up");
+                AnimateEnemy(0, 39);
+            }
+            if (getPositionY() > target.coordinateY)
+            {
+                setCurrentDirection("Down");
+                AnimateEnemy(20, 59);
+            }
 
             // Moving left or right towards target(waypoint)
             if (getPositionX() < target.coordinateX)
@@ -73,6 +99,21 @@ namespace defence_line_form
             {
                 g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
             }
+        }
+
+        private void AnimateEnemy(int start, int end)
+        {
+            slowDownFrameRate += 1;
+            if (slowDownFrameRate == 4)
+            {
+                steps++;
+                slowDownFrameRate = 0;
+            }
+            if (steps > end || steps < start)
+            {
+                steps = start;
+            }
+            setImage(enemyMovement[steps]);
         }
     }
 }
