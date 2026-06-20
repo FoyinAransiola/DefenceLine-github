@@ -32,11 +32,11 @@ namespace defence_line_form
         {
             waypoints = new List<waypoint>
             {//list of waypoint coordinates that define enemy path
-                new waypoint(316, 252),
-                new waypoint(316, 84),
-                new waypoint(524, 84),
-                new waypoint(524, 370),
-                new waypoint(727, 370)
+                new waypoint(476, 385),
+                new waypoint(476, 128,
+                new waypoint(784, 128),
+                new waypoint(784, 571),
+                new waypoint(1104, 571))
             };
 
 
