@@ -32,11 +32,11 @@ namespace defence_line_form
         {
             waypoints = new List<waypoint>
             {//list of waypoint coordinates that define enemy path
-                new waypoint(476, 385),
-                new waypoint(476, 128,
-                new waypoint(784, 128),
-                new waypoint(784, 571),
-                new waypoint(1104, 571))
+                new waypoint(290, 223),
+                new waypoint(290, 57),
+                new waypoint(505, 57),
+                new waypoint(505, 370),
+                new waypoint(727, 370)
             };
 
 
@@ -58,7 +58,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 1, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -92,8 +92,9 @@ namespace defence_line_form
             
         }
 
-        
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }
