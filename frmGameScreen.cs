@@ -92,9 +92,6 @@ namespace defence_line_form
             
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

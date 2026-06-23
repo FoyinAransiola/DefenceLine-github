@@ -56,7 +56,7 @@ namespace defence_line_form
         {
             return spriteimage;
         }
-        public string getcCurrentDirection()
+        public string getCurrentDirection()
         {
             return currentDirection;
         }
