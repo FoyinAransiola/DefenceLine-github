@@ -103,7 +103,7 @@ namespace defence_line_form
         private void AnimateEnemy(int start, int end)// this is the methods that controls animations
         {
             slowDownFrameRate += 1;
-            if (slowDownFrameRate == 4)
+            if (slowDownFrameRate == 2)
             {
                 steps++;
                 slowDownFrameRate = 0;
