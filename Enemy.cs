@@ -50,12 +50,12 @@ namespace defence_line_form
             }
             if (getPositionY() < target.coordinateY)
             {
-                setCurrentDirection("Up");
+                setCurrentDirection("Down");
                 AnimateEnemy(0, 39);
             }
             if (getPositionY() > target.coordinateY)
             {
-                setCurrentDirection("Down");
+                setCurrentDirection("Up");
                 AnimateEnemy(20, 59);
             }
 
