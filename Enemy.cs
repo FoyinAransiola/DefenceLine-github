@@ -14,7 +14,7 @@ namespace defence_line_form
         private int currentWaypointIndex = 0;
         private List<waypoint> waypoints;
         private List<string> enemyMovement = new List<string>();
-        int steps = 0;
+        int steps = 0; 
         int slowDownFrameRate = 0;
 
 
