@@ -35,8 +35,8 @@ namespace defence_line_form
                 new waypoint(290, 223),
                 new waypoint(290, 57),
                 new waypoint(500, 57),
-                new waypoint(500, 345),
-                new waypoint(724, 345)
+                new waypoint(500, 280),
+                new waypoint(770, 281)
             };
 
 
@@ -58,7 +58,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 1, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
