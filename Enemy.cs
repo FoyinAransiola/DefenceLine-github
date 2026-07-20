@@ -19,45 +19,44 @@ namespace defence_line_form
 
 
 
-        public Enemy(int newX, int newY, int newHeight, int newWidth, int newSpeed,List<waypoint> newWaypoint)
-           : base(newX , newY, newHeight,newHeight,newSpeed)
+        public Enemy(int newX, int newY, int newHeight, int newWidth, int newSpeed, List<waypoint> newWaypoint)
+           : base(newX, newY, newHeight, newHeight, newSpeed)
         {
             this.waypoints = newWaypoint;
             enemyMovement = Directory.GetFiles("Goblins", "*.png").ToList();
             setImage(enemyMovement[60]); // uses Sprite set image method
         }
 
-       
+
         public void move()// this method checks if the enemy has reached the waypoint and moves the enemy towards the next waypoint if it has not reached the last waypoint
         {
-            if ( currentWaypointIndex >= waypoints.Count) // this ensures the enemy stops after reaching the last waypoint
+            if (currentWaypointIndex >= waypoints.Count) // this ensures the enemy stops after reaching the last waypoint
             {
                 return;
             }
 
             waypoint target = waypoints[currentWaypointIndex]; // getting next waypoint to move to 
 
-
+            // gets diretcions
             if (getPositionX() < target.coordinateX)
             {
                 setCurrentDirection("Right");
-                AnimateEnemy(60, 79);
             }
             if (getPositionX() > target.coordinateX)
             {
                 setCurrentDirection("Left");
-                AnimateEnemy(40, 59);
             }
             if (getPositionY() < target.coordinateY)
             {
-                setCurrentDirection("Up");
-                AnimateEnemy(0, 39);
+                setCurrentDirection("Down");
             }
             if (getPositionY() > target.coordinateY)
             {
-                setCurrentDirection("Down");
-                AnimateEnemy(20, 59);
+                setCurrentDirection("Up");
             }
+
+            AnimationDirection(getCurrentDirection());
+
 
             // Moving left or right towards target(waypoint)
             if (getPositionX() < target.coordinateX)
@@ -80,7 +79,7 @@ namespace defence_line_form
             }
 
             // checking is enemy sprite has reached waypoint         
-            if ( getPositionX() >= target.coordinateX - 3 && getPositionX() <= target.coordinateX + 3 &&
+            if (getPositionX() >= target.coordinateX - 3 && getPositionX() <= target.coordinateX + 3 &&
                 getPositionY() >= target.coordinateY - 3 && getPositionY() <= target.coordinateY + 3)
             {
                 currentWaypointIndex = currentWaypointIndex + 1;
@@ -101,10 +100,10 @@ namespace defence_line_form
             }
         }
 
-        private void AnimateEnemy(int start, int end)
+        private void AnimateEnemy(int start, int end)// this is the methods that controls animations
         {
             slowDownFrameRate += 1;
-            if (slowDownFrameRate == 4)
+            if (slowDownFrameRate == 2)
             {
                 steps++;
                 slowDownFrameRate = 0;
@@ -115,5 +114,26 @@ namespace defence_line_form
             }
             setImage(enemyMovement[steps]);
         }
+
+        public void AnimationDirection(string direction) // gets AnimateEnemy to iterate thorugh the right sequence of images
+        {
+            if (direction == "Up")
+            {
+                AnimateEnemy(0, 19);
+            }
+            if (direction == "Down")
+            {
+                AnimateEnemy(20, 39);
+            }
+            if (direction == "Left")
+            {
+                AnimateEnemy(40, 59);
+            }
+            if (direction == "Right")
+            {
+                AnimateEnemy(60, 79);
+            }
+        }
+
     }
 }
