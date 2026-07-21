@@ -49,6 +49,9 @@
             this.Name = "frmGameScreen";
             this.Text = "frmGameScreen";
             this.Load += new System.EventHandler(this.frmGameScreen__Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseUp);
             this.ResumeLayout(false);
 
         }

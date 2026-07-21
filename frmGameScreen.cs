@@ -19,13 +19,28 @@ namespace defence_line_form
         private int spawnedEnemyCount = 0; // counter to keep track of how many enemies have been spawned into the game screen
         private int spawnInterval = 60; // time interval between enemy spawns in game timer ticks (60 ticks = 1second)
         private int spawnCounter = 0; // keep track of time passed in game timer ticks to determine when to spawn next enemy 
-
+        private struct towerMenuItems
+        {
+            public string name;
+            public int cost;
+            public int damage;
+            public int range;
+            public Image image;
+            public Rectangle bounds;
+        }
+        private List<towerMenuItems> towerMenu = new List<towerMenuItems>();
+        private List<Tower> placedTowers = new List<Tower>();
+        private bool isDragging = false;
+        private towerMenuItems draggedTowerType;
+        private int dragX;
+        private int dragY;
 
         public frmGameScreen()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            
+
+
         }
 
         private void frmGameScreen__Load(object sender, EventArgs e)
@@ -39,6 +54,18 @@ namespace defence_line_form
                 new waypoint(770, 281)
             };
 
+            towerMenu.Add(new towerMenuItems
+            {
+                name = "Basic Tower",
+                cost = 100,
+                damage = 10,
+                range = 100,
+                image = Image.FromFile("enemydemo.jpeg"),
+                bounds = new Rectangle(400,400 , 35, 35)
+            });
+
+           
+
 
             // game timer setup
             Timer gameTimer = new Timer();
@@ -46,8 +73,15 @@ namespace defence_line_form
             gameTimer.Tick += gameTimerEvent;
             gameTimer.Start();
 
-            
+            this.MouseDown += frmGameScreen_MouseDown;
+            this.MouseMove += frmGameScreen_MouseMove;
+            this.MouseUp += frmGameScreen_MouseUp;
         }
+
+
+
+
+
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
@@ -82,6 +116,59 @@ namespace defence_line_form
             this.Invalidate();
         }
 
+
+        private void frmGameScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            foreach (var tower in towerMenu)
+            {
+                if (tower.bounds.Contains(e.Location))
+                {
+                    isDragging = true;
+                    draggedTowerType = tower;
+                    dragX = e.X;
+                    dragY = e.Y;
+                    break;
+                }
+            }
+        }
+
+        private void frmGameScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                dragX = e.X;
+                dragY = e.Y;
+                this.Invalidate(); // Redraw the form to show the dragged tower
+            }
+        }
+
+        private void frmGameScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                // Place the tower at the drop location
+                placedTowers.Add(new Tower(dragX - 20, dragY - 20, 40,40, 0, draggedTowerType.range, draggedTowerType.damage, draggedTowerType.name));
+                isDragging = false;
+                this.Invalidate(); // Redraw the form to show the placed tower
+            }
+        }
+
+        private bool isValidPlacement(int x, int y)
+        {
+            // Check if the placement is within the bounds of the game area
+            if (x < 0 || y < 0 || x > this.ClientSize.Width || y > this.ClientSize.Height)
+                return false;
+            // Check if the placement overlaps with existing towers
+            foreach (var tower in placedTowers)
+            {
+                Rectangle towerRect = new Rectangle(tower.getPositionX(), tower.getPositionY(), tower.getWidth(), tower.getHeight());
+                if (towerRect.Contains(x, y))
+                    return false;
+            }
+            return true;
+        }
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -89,9 +176,21 @@ namespace defence_line_form
             {
                 enemy.Draw(e.Graphics);
             }
-            
-        }
+            foreach(Tower tower in placedTowers)
+            {
+                tower.DrawTower(e.Graphics);
+            }
+            foreach (var item in towerMenu)
+            {
+                e.Graphics.DrawImage(item.image, item.bounds);
+            }
 
-        
+            if(isDragging)
+            {
+                e.Graphics.DrawImage(draggedTowerType.image, dragX - 20, dragY - 20, 40, 40);
+            }
+
+        }
     }
 }
+
