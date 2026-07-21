@@ -14,12 +14,12 @@ namespace defence_line_form
         private string type;
 
         public Tower(int newX, int newY, int newHeight, int newWidth, int newSpeed, int newRange, int newDamage, string newType)
-            : base(newX, newY, newHeight, newWidth, 0)
+            : base(newX, newY, newHeight, newWidth, 0)// the speed is set to 0 because the tower does not move
         {
-            this.range = newRange;
+            this.range = newRange; 
             this.damage = newDamage;
             this.type = newType;
-            setImage("enemydemo.jpeg");
+            setImage("enemydemo.jpeg");// uses Sprite set image method
         }
 
         public void DrawTower(Graphics g)
