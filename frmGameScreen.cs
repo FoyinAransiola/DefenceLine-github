@@ -193,20 +193,7 @@ namespace defence_line_form
             }
         }
 
-        private bool isValidPlacement(int x, int y)
-        {
-            // Check if the placement is within the bounds of the game area
-            if (x < 0 || y < 0 || x > this.ClientSize.Width || y > this.ClientSize.Height)
-                return false;
-            // Check if the placement overlaps with existing towers
-            foreach (var tower in placedTowers)
-            {
-                Rectangle towerRect = new Rectangle(tower.getPositionX(), tower.getPositionY(), tower.getWidth(), tower.getHeight());
-                if (towerRect.Contains(x, y))
-                    return false;
-            }
-            return true;
-        }
+        
 
 
         protected override void OnPaint(PaintEventArgs e)
@@ -231,6 +218,12 @@ namespace defence_line_form
             // which is constantly updated in the MouseMove event handler
             if (isDragging)
             {
+                // Draw a translucent circle showing the tower's attack range
+                using (SolidBrush rangeBrush = new SolidBrush(Color.FromArgb(80, 255, 255, 255)))
+                {
+                    int radius = draggedTowerType.range;// radius of the range circle is equal to the tower's range
+                    e.Graphics.FillEllipse(rangeBrush, dragX - radius, dragY - radius, radius * 2, radius * 2); 
+                }
                 e.Graphics.DrawImage(draggedTowerType.image, dragX - 20, dragY - 20, 40, 40);
             }
 
