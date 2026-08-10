@@ -13,11 +13,13 @@ namespace defence_line_form
 {
     public partial class frmGameScreen : Form
     {
-        // list that holds all the enemy objects in the game
-        private List<Enemy> enemies = new List<Enemy>();
-
         //List that holds all the waypoints for enemy pathfinding
         private List<waypoint> waypoints;
+
+
+// ENEMY SPAWNING VARIABLES
+        // list that holds all the enemy objects in the game 
+        private List<Enemy> enemies = new List<Enemy>();
 
         // total number of enemies to spawn into the game screen
         private int totalenemies = 10;
@@ -29,8 +31,11 @@ namespace defence_line_form
         private int spawnInterval = 60;
 
         // keep track of time passed in game timer ticks to determine when to spawn next enemy
-        private int spawnCounter = 0; 
+        private int spawnCounter = 0;
 
+
+
+// TOWER PLACEMENT VARIABLES
         private struct towerMenuItems // struct to hold tower menu item information
         {
             public string name;
@@ -46,6 +51,7 @@ namespace defence_line_form
         // list to hold all the towers that have been placed on the game screen
         private List<Tower> placedTowers = new List<Tower>();
 
+// TOWER DRAGGING VARIABLES
         // this is used to determine if the player is currently dragging a tower from the tower menu
         private bool isDragging = false;
 
@@ -55,6 +61,8 @@ namespace defence_line_form
 
         private int dragX;
         private int dragY;
+
+
 
         public frmGameScreen()
         {
@@ -83,6 +91,15 @@ namespace defence_line_form
                 range = 100,
                 image = Image.FromFile("enemydemo.jpeg"),
                 bounds = new Rectangle(400,400 , 35, 35)
+            });
+            towerMenu.Add(new towerMenuItems
+            {
+                name = "Basic Tower 2",
+                cost = 100,
+                damage = 10,
+                range = 100,
+                image = Image.FromFile("enemydemo.jpeg"),
+                bounds = new Rectangle(350, 400, 35, 35)
             });
 
 
