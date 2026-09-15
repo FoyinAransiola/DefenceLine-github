@@ -13,19 +13,63 @@ namespace defence_line_form
 {
     public partial class frmGameScreen : Form
     {
-        private List<Enemy> enemies = new List<Enemy>();// list that holds all the enemy objects in the game
-        private List<waypoint> waypoints;//List that holds all the waypoints for enemy pathfinding
-        private int totalenemies = 10; // total number of enemies to spawn into the game screen
-        private int spawnedEnemyCount = 0; // counter to keep track of how many enemies have been spawned into the game screen
-        private int spawnInterval = 60; // time interval between enemy spawns in game timer ticks (60 ticks = 1second)
-        private int spawnCounter = 0; // keep track of time passed in game timer ticks to determine when to spawn next enemy 
+        //List that holds all the waypoints for enemy pathfinding
+        private List<waypoint> waypoints;
+
+
+// ENEMY SPAWNING VARIABLES
+        // list that holds all the enemy objects in the game 
+        private List<Enemy> enemies = new List<Enemy>();
+
+        // total number of enemies to spawn into the game screen
+        private int totalenemies = 10;
+
+        // counter to keep track of how many enemies have been spawned into the game screen
+        private int spawnedEnemyCount = 0;
+
+        // time interval between enemy spawns in game timer ticks (60 ticks = 1second)
+        private int spawnInterval = 60;
+
+        // keep track of time passed in game timer ticks to determine when to spawn next enemy
+        private int spawnCounter = 0;
+
+
+
+// TOWER PLACEMENT VARIABLES
+        private struct towerMenuItems // struct to hold tower menu item information
+        {
+            public string name;
+            public int cost;
+            public int damage;
+            public int range;
+            public Image image;
+            public Rectangle bounds; // this is used to define the area of the tower menu item for mouse interaction
+        }
+        // list to hold all the tower menu items
+        private List<towerMenuItems> towerMenu = new List<towerMenuItems>();
+
+        // list to hold all the towers that have been placed on the game screen
+        private List<Tower> placedTowers = new List<Tower>();
+
+// TOWER DRAGGING VARIABLES
+        // this is used to determine if the player is currently dragging a tower from the tower menu
+        private bool isDragging = false;
+
+        //this is used to hold the tower menu item that is currently being dragged from the menu 
+        // so the mouse events know what to preview and place on the game screen
+        private towerMenuItems draggedTowerType;
+
+        private int dragX;
+        private int dragY;
+
 
 
         public frmGameScreen()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            
+
+
         }
 
         private void frmGameScreen__Load(object sender, EventArgs e)
@@ -35,9 +79,28 @@ namespace defence_line_form
                 new waypoint(290, 223),
                 new waypoint(290, 57),
                 new waypoint(500, 57),
-                new waypoint(500, 345),
-                new waypoint(724, 345)
+                new waypoint(500, 280),
+                new waypoint(770, 281)
             };
+            // this is where i add tower items to the tower menu list, hence adding towers to the tower menu
+            towerMenu.Add(new towerMenuItems
+            {
+                name = "Basic Tower",
+                cost = 100,
+                damage = 10,
+                range = 100,
+                image = Image.FromFile("enemydemo.jpeg"),
+                bounds = new Rectangle(400,400 , 35, 35)
+            });
+            towerMenu.Add(new towerMenuItems
+            {
+                name = "Basic Tower 2",
+                cost = 100,
+                damage = 10,
+                range = 100,
+                image = Image.FromFile("enemydemo.jpeg"),
+                bounds = new Rectangle(350, 400, 35, 35)
+            });
 
 
             // game timer setup
@@ -46,8 +109,19 @@ namespace defence_line_form
             gameTimer.Tick += gameTimerEvent;
             gameTimer.Start();
 
-            
+            // this detects click on the tower menu and starts the drag operation
+            this.MouseDown += frmGameScreen_MouseDown;
+            // this updates the position of the dragged tower as the mouse moves
+            this.MouseMove += frmGameScreen_MouseMove;
+            // this detects when the mouse button is released and places the tower on the game
+            // screen on the location of the mouse cursor if it is a valid placement location
+            this.MouseUp += frmGameScreen_MouseUp;
         }
+
+
+
+
+
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
@@ -82,16 +156,78 @@ namespace defence_line_form
             this.Invalidate();
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+
+        private void frmGameScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            base.OnPaint(e);
-            foreach (Enemy enemy in enemies)// draws each enemy on the game screen at its current position
+            foreach (var tower in towerMenu) // loop through each tower in the tower menu to check if the mouse click is within its bounds
             {
-                enemy.Draw(e.Graphics);
+                if (tower.bounds.Contains(e.Location))// if the mouse click is within the bounds of a tower menu item, start dragging that tower
+                {
+                    isDragging = true;
+                    draggedTowerType = tower;
+                    dragX = e.X;
+                    dragY = e.Y;
+                    break;// exit the loop once a tower is found to be dragged
+                }
             }
-            
+        }
+
+        private void frmGameScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                dragX = e.X;// update the Xposition of the dragged tower to follow the mouse cursor
+                dragY = e.Y;// update the Y position of the dragged tower to follow the mouse cursor
+                this.Invalidate(); // Redraw the form to show the dragged tower
+            }
+        }
+
+        private void frmGameScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                // Place the tower at the drop location
+                placedTowers.Add(new Tower(dragX - 20, dragY - 20, 40,40, 0, draggedTowerType.range, draggedTowerType.damage, draggedTowerType.name));
+                isDragging = false;
+                this.Invalidate(); // Redraw the form to show the placed tower
+            }
         }
 
         
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            // draws each enemy on the game screen at its current position
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Draw(e.Graphics);
+            }
+            // draws each tower on the game screen at its current position
+            foreach (Tower tower in placedTowers)
+            {
+                tower.DrawTower(e.Graphics);
+            }
+            // draws each tower menu item on the game screen at its defined position
+            foreach (var item in towerMenu)
+            {
+                e.Graphics.DrawImage(item.image, item.bounds);
+            }
+            // if a tower is being dragged, draw it at the current mouse position
+            // which is constantly updated in the MouseMove event handler
+            if (isDragging)
+            {
+                // Draw a translucent circle showing the tower's attack range
+                using (SolidBrush rangeBrush = new SolidBrush(Color.FromArgb(80, 255, 255, 255)))
+                {
+                    int radius = draggedTowerType.range;// radius of the range circle is equal to the tower's range
+                    e.Graphics.FillEllipse(rangeBrush, dragX - radius, dragY - radius, radius * 2, radius * 2); 
+                }
+                e.Graphics.DrawImage(draggedTowerType.image, dragX - 20, dragY - 20, 40, 40);
+            }
+
+        }
     }
 }
+

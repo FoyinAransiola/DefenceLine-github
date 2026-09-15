@@ -41,7 +41,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::defence_line_form.Properties.Resources.bg;
+            this.BackgroundImage = global::defence_line_form.Properties.Resources.untitled;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1200, 692);
             this.DoubleBuffered = true;
@@ -49,6 +49,9 @@
             this.Name = "frmGameScreen";
             this.Text = "frmGameScreen";
             this.Load += new System.EventHandler(this.frmGameScreen__Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frmGameScreen_MouseUp);
             this.ResumeLayout(false);
 
         }

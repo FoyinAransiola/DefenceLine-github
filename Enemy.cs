@@ -14,7 +14,7 @@ namespace defence_line_form
         private int currentWaypointIndex = 0;
         private List<waypoint> waypoints;
         private List<string> enemyMovement = new List<string>();
-        int steps = 0;
+        int steps = 0; 
         int slowDownFrameRate = 0;
 
 
@@ -91,15 +91,6 @@ namespace defence_line_form
             if (currentWaypointIndex >= waypoints.Count) { return true; }
             else { return false; }
         }
-
-        public void Draw(Graphics g)
-        {
-            if (getPositionX() >= 0)
-            {
-                g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
-            }
-        }
-
         private void AnimateEnemy(int start, int end)// this is the methods that controls animations
         {
             slowDownFrameRate += 1;
@@ -132,6 +123,14 @@ namespace defence_line_form
             if (direction == "Right")
             {
                 AnimateEnemy(60, 79);
+            }
+        }
+
+        public void Draw(Graphics g)
+        {
+            if (getPositionX() >= 0)
+            {
+                g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
             }
         }
 
