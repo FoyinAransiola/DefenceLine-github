@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,6 +52,8 @@ namespace defence_line_form
         // list to hold all the towers that have been placed on the game screen
         private List<Tower> placedTowers = new List<Tower>();
 
+
+
 // TOWER DRAGGING VARIABLES
         // this is used to determine if the player is currently dragging a tower from the tower menu
         private bool isDragging = false;
@@ -64,12 +67,11 @@ namespace defence_line_form
 
 
 
+
         public frmGameScreen()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-
-
         }
 
         private void frmGameScreen__Load(object sender, EventArgs e)
@@ -82,6 +84,7 @@ namespace defence_line_form
                 new waypoint(500, 280),
                 new waypoint(770, 281)
             };
+
             // this is where i add tower items to the tower menu list, hence adding towers to the tower menu
             towerMenu.Add(new towerMenuItems
             {
@@ -103,6 +106,7 @@ namespace defence_line_form
             });
 
 
+
             // game timer setup
             Timer gameTimer = new Timer();
             gameTimer.Interval = 16;
@@ -111,14 +115,14 @@ namespace defence_line_form
 
             // this detects click on the tower menu and starts the drag operation
             this.MouseDown += frmGameScreen_MouseDown;
+
             // this updates the position of the dragged tower as the mouse moves
             this.MouseMove += frmGameScreen_MouseMove;
+
             // this detects when the mouse button is released and places the tower on the game
             // screen on the location of the mouse cursor if it is a valid placement location
             this.MouseUp += frmGameScreen_MouseUp;
         }
-
-
 
 
 
@@ -156,6 +160,11 @@ namespace defence_line_form
             this.Invalidate();
         }
 
+        
+
+
+
+
 
         private void frmGameScreen_MouseDown(object sender, MouseEventArgs e)
         {
@@ -171,7 +180,6 @@ namespace defence_line_form
                 }
             }
         }
-
         private void frmGameScreen_MouseMove(object sender, MouseEventArgs e)
         {
             if (isDragging)
@@ -179,9 +187,9 @@ namespace defence_line_form
                 dragX = e.X;// update the Xposition of the dragged tower to follow the mouse cursor
                 dragY = e.Y;// update the Y position of the dragged tower to follow the mouse cursor
                 this.Invalidate(); // Redraw the form to show the dragged tower
+                this.DoubleBuffered = true;
             }
         }
-
         private void frmGameScreen_MouseUp(object sender, MouseEventArgs e)
         {
             if (isDragging)
@@ -192,9 +200,6 @@ namespace defence_line_form
                 this.Invalidate(); // Redraw the form to show the placed tower
             }
         }
-
-        
-
 
         protected override void OnPaint(PaintEventArgs e)
         {
