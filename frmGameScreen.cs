@@ -67,6 +67,9 @@ namespace defence_line_form
         private int dragY;
 
 
+// PROJECTILE VARIABLES
+        private List<projectiles> activeProjectiles = new List<projectiles>();
+
 
 
         public frmGameScreen()
@@ -92,8 +95,8 @@ namespace defence_line_form
                 name = "Basic Tower",
                 cost = 100,
                 damage = 10,
-                range = 100,
-                attackSpeed = 10,
+                range =120,
+                attackSpeed = 3,
                 image = Image.FromFile("enemydemo.jpeg"),
                 bounds = new Rectangle(400, 400, 35, 35)
             });
@@ -101,9 +104,9 @@ namespace defence_line_form
             {
                 name = "Basic Tower 2",
                 cost = 100,
-                damage = 10,
-                range = 100,
-                attackSpeed = 10,
+                damage = 100,
+                range =1000,
+                attackSpeed = 1,
                 image = Image.FromFile("enemydemo2.jpeg"),
                 bounds = new Rectangle(350, 400, 35, 35)
             });
@@ -129,7 +132,6 @@ namespace defence_line_form
 
 
 
-
         private void gameTimerEvent(object sender, EventArgs e)
         {
             if (spawnedEnemyCount < totalenemies)
@@ -139,7 +141,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 1, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -160,10 +162,35 @@ namespace defence_line_form
                 }
             }
 
+            foreach (Tower tower in placedTowers)
+            {
+                projectiles newProjectile = tower.fire(enemies);
+                if (newProjectile != null)
+                {
+                    activeProjectiles.Add(newProjectile);
+                }
+            }
+
+            foreach (projectiles projectile in activeProjectiles)
+            {
+                projectile.moveTowardsEnemy();
+            }
+
+            for (int i = activeProjectiles.Count - 1; i >= 0; i--)
+            {
+                if (activeProjectiles[i].hasHitTaregt())
+                {
+                    activeProjectiles[i].DisposeImage();
+                    activeProjectiles.RemoveAt(i);
+
+                }
+            }
+
             this.Invalidate();
+
         }
 
-        
+
 
 
 
@@ -236,6 +263,11 @@ namespace defence_line_form
                     e.Graphics.FillEllipse(rangeBrush, dragX - radius, dragY - radius, radius * 2, radius * 2); 
                 }
                 e.Graphics.DrawImage(draggedTowerType.image, dragX - 20, dragY - 20, 40, 40);
+            }
+            
+            foreach (projectiles projectile in activeProjectiles)
+            {
+                projectile.Draw(e.Graphics);
             }
 
         }

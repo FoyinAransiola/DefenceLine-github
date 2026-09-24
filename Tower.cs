@@ -57,6 +57,34 @@ namespace defence_line_form
             return null;// this means that no enemies were found to be within range and no enemy can be attacked by the tower
         }
 
+        private int cooldownCount = 0;
+        public projectiles fire(List<Enemy> enemies) // this method is called when the tower is ready to fire and it checks if there are any enemies in range
+        {
+            if (cooldownCount > 0)
+            {
+                cooldownCount--;// this means that the tower is still on cooldown and cannot fire yet
+                return null;
+            }
 
+            Enemy target = findEnemyInRange(enemies); // this finds the first enemy that is within range of the tower and returns it as the target
+            if (target == null)
+            {
+                return null; // this means that there are no enemies in range and the tower cannot fire
+            }
+
+            // Set the cooldown based on the attack speed
+            int ticksPerSecond = 60; 
+            int ticksBetweenShots = Math.Max(1, ticksPerSecond / Math.Max(1, attackSpeed));
+            cooldownCount = ticksBetweenShots;
+
+            // Create projectile centered on the tower
+            int projWidth = 20;
+            int projHeight = 20;
+            int projX = getPositionX() + getWidth() / 2 - projWidth / 2;
+            int projY = getPositionY() + getHeight() / 2 - projHeight / 2;
+            int projSpeed = 7;// projectile travel speed
+
+            return new projectiles(projX, projY, projHeight, projWidth, projSpeed, target, damage);
+        }
     }
 }
