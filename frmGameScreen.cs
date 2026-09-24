@@ -43,6 +43,7 @@ namespace defence_line_form
             public int cost;
             public int damage;
             public int range;
+            public int attackSpeed;
             public Image image;
             public Rectangle bounds; // this is used to define the area of the tower menu item for mouse interaction
         }
@@ -92,8 +93,9 @@ namespace defence_line_form
                 cost = 100,
                 damage = 10,
                 range = 100,
+                attackSpeed = 10,
                 image = Image.FromFile("enemydemo.jpeg"),
-                bounds = new Rectangle(400,400 , 35, 35)
+                bounds = new Rectangle(400, 400, 35, 35)
             });
             towerMenu.Add(new towerMenuItems
             {
@@ -101,7 +103,8 @@ namespace defence_line_form
                 cost = 100,
                 damage = 10,
                 range = 100,
-                image = Image.FromFile("enemydemo.jpeg"),
+                attackSpeed = 10,
+                image = Image.FromFile("enemydemo2.jpeg"),
                 bounds = new Rectangle(350, 400, 35, 35)
             });
 
@@ -136,7 +139,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 1, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -195,7 +198,10 @@ namespace defence_line_form
             if (isDragging)
             {
                 // Place the tower at the drop location
-                placedTowers.Add(new Tower(dragX - 20, dragY - 20, 40,40, 0, draggedTowerType.range, draggedTowerType.damage, draggedTowerType.name));
+                placedTowers.Add(new Tower(dragX - 20 ,dragY - 20, 40 , 40 , 0,
+                                            draggedTowerType.range, draggedTowerType.damage,
+                                            draggedTowerType.name, draggedTowerType.attackSpeed,
+                                            draggedTowerType.image));
                 isDragging = false;
                 this.Invalidate(); // Redraw the form to show the placed tower
             }

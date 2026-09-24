@@ -12,23 +12,27 @@ namespace defence_line_form
         private int range;
         private int damage;
         private string type;
+        private int attackSpeed;
+        private Image image;
 
-        public Tower(int newX, int newY, int newHeight, int newWidth, int newSpeed, int newRange, int newDamage, string newType)
+        public Tower(int newX, int newY, int newHeight, int newWidth, int newSpeed, int newRange, int newDamage, string newType , int newAttackSpeed, Image newimage)
             : base(newX, newY, newHeight, newWidth, 0)// the speed is set to 0 because the tower does not move
         {
             this.range = newRange; 
             this.damage = newDamage;
             this.type = newType;
-            setImage("enemydemo.jpeg");// uses Sprite set image method
+            this.attackSpeed = newAttackSpeed;
+            this.image = newimage;
+            
         }
 
         public void DrawTower(Graphics g)
         {
-            g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
+            g.DrawImage(this.image, getPositionX(), getPositionY(), getWidth(), getHeight());
         }
 
 
-        // the is the enemy detection method that checks if the enemy is within the tower's range and returns true if it is and false if it is not
+        // this is the enemy detection method that checks if the enemy is within the tower's range and returns true if it is and false if it is not
         private int getDistanceToEnemy(Enemy enemy)
         {// this works out the straight line distance between the tower and the enemy using the pythagorean theorem
             int xdifference = enemy.getPositionX() - getPositionX();
