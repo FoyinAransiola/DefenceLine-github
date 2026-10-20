@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace defence_line_form
 {
-    internal class projectiles : Sprite
+    internal class projectiles : Sprite 
     {
         private Enemy targetEnemy;// this is the enemy that the projectile is targeting
         private int damage; // this is the amount of damage that the projectile will do to the enemy when it hits it
