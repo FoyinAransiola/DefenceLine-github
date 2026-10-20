@@ -35,6 +35,11 @@ namespace defence_line_form
         private int spawnCounter = 0;
 
 
+        private int waveCount = 3;
+
+
+
+
 
 // TOWER PLACEMENT VARIABLES
         private struct towerMenuItems // struct to hold tower menu item information
@@ -134,18 +139,38 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
-            if (spawnedEnemyCount < totalenemies)
-            // checks if the number of spawned enemies is less that the total number of
-            // enemies to spawn before spawning the next enemy (preventing infinite spawning)
+            //if (spawnedEnemyCount < totalenemies)
+            //// checks if the number of spawned enemies is less that the total number of
+            //// enemies to spawn before spawning the next enemy (preventing infinite spawning)
+            //{
+            //    spawnCounter++; // incremented every tick
+            //    if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
+            //    {
+            //        enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
+            //        spawnedEnemyCount++;
+            //        spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
+            //    }
+            //}
+
+            for (int i = 0; i < waveCount; i++)
             {
-                spawnCounter++; // incremented every tick
-                if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
+                if (spawnedEnemyCount < totalenemies)
+                // checks if the number of spawned enemies is less that the total number of
+                // enemies to spawn before spawning the next enemy (preventing infinite spawning)
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
-                    spawnedEnemyCount++;
-                    spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
+                    spawnCounter++; // incremented every tick
+                    if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
+                    {
+                        enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
+                        spawnedEnemyCount++;
+                        spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
+                    }
                 }
             }
+
+
+
+
 
             foreach (Enemy enemy in enemies)
             {
