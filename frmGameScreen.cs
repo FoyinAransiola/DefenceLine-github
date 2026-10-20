@@ -68,7 +68,7 @@ namespace defence_line_form
 
 
 // PROJECTILE VARIABLES
-        private List<projectiles> activeProjectiles = new List<projectiles>();
+        private List<projectiles> activeProjectiles = new List<projectiles>(); 
 
 
 
@@ -196,7 +196,7 @@ namespace defence_line_form
 
 
 
-        private void frmGameScreen_MouseDown(object sender, MouseEventArgs e)
+        private void frmGameScreen_MouseDown(object sender, MouseEventArgs e) 
         {
             foreach (var tower in towerMenu) // loop through each tower in the tower menu to check if the mouse click is within its bounds
             {

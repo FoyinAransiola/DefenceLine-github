@@ -19,8 +19,13 @@ namespace defence_line_form
 
         private void Startbutton_Click(object sender, EventArgs e)
         {
-            frmGameScreen frmGameScreen = new frmGameScreen();
-            frmGameScreen.Show();
+            frmMapSelection frmMapSelection = new frmMapSelection();
+            frmMapSelection.Show();
+        }
+
+        private void frmStartScreen_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

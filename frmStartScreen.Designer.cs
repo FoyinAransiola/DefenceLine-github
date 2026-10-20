@@ -66,6 +66,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmStartScreen";
             this.Text = "Start Screen";
+            this.Load += new System.EventHandler(this.frmStartScreen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

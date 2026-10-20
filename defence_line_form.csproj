@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmMapSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapSelection.Designer.cs">
+      <DependentUpon>frmMapSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="projectiles.cs" />
     <Compile Include="Tower.cs" />
     <Compile Include="Enemy.cs" />
@@ -67,6 +73,9 @@
     <Compile Include="waypoint.cs" />
     <EmbeddedResource Include="frmGameScreen.resx">
       <DependentUpon>frmGameScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMapSelection.resx">
+      <DependentUpon>frmMapSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStartScreen.resx">
       <DependentUpon>frmStartScreen.cs</DependentUpon>
@@ -112,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\untitled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8bit-pixel-art-night-sky-game-space-landscape-vector.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
