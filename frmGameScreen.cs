@@ -17,6 +17,8 @@ namespace defence_line_form
         //List that holds all the waypoints for enemy pathfinding
         private List<waypoint> waypoints;
 
+        private int health = 3;
+
 
 // ENEMY SPAWNING VARIABLES
         // list that holds all the enemy objects in the game 
@@ -34,8 +36,10 @@ namespace defence_line_form
         // keep track of time passed in game timer ticks to determine when to spawn next enemy
         private int spawnCounter = 0;
 
-
+        //this is used to keep track of how many waves of enemies have been spawned and how many waves are in the game
         private int waveCount = 3;
+
+        // this is used to keep track of the current wave number
         private int waveCounter = 1;
 
 
@@ -140,14 +144,17 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
+            // spawn enemies if the number of spawned enemies is less than the total number of enemies to spawn
             if (spawnedEnemyCount < totalenemies)
             {
                 spawnEnemy();                
             }
+            // if all enemies have been spawned and defeated and there are more waves to spawn, start the next wave
             else if (enemies.Count == 0 && waveCounter < waveCount)
             {
                 waveCounter++;
-                totalenemies += 2;
+                wavedisplay.Text = "Wave: " + waveCounter.ToString();// update wave display
+                totalenemies += 2;// increase the number of enemies to spawn in the next wave
                 spawnedEnemyCount = 0;
                 spawnCounter = 0;
             }
@@ -170,6 +177,9 @@ namespace defence_line_form
                 {
                     enemies[i].DisposeImage();
                     enemies.RemoveAt(i);
+
+                    health--; // decrease health when an enemy reaches the end
+                    healthdisplay.Text = "Health: " + health.ToString();// update health display
                 }
             }
 
@@ -203,7 +213,7 @@ namespace defence_line_form
 
 
 
-        private void spawnEnemy()
+        private void spawnEnemy()// this method is called every tick of the game timer to spawn enemies at regular intervals
         {
             if (spawnedEnemyCount < totalenemies)
             // checks if the number of spawned enemies is less that the total number of
@@ -216,6 +226,18 @@ namespace defence_line_form
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
+            }
+        }
+
+
+        private void gameOver()// this method is called when the player runs out of health and the game is over
+        {
+            if (health <= 0)
+            {
+            MessageBox.Show("Game Over! You have run out of health.");
+            this.Close(); // close the game screen form
+            frmMapSelection frmMapSelection = new frmMapSelection();
+            frmMapSelection.Show();
             }
         }
 
@@ -296,6 +318,8 @@ namespace defence_line_form
             }
 
         }
+
+        
     }
 }
 
