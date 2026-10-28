@@ -34,6 +34,8 @@
             this.waveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wavedisplay = new System.Windows.Forms.Label();
             this.healthdisplay = new System.Windows.Forms.Label();
+            this.Exit = new System.Windows.Forms.Button();
+            this.moneydisplay = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +80,30 @@
             this.healthdisplay.TabIndex = 2;
             this.healthdisplay.Text = "Health: 0";
             // 
+            // Exit
+            // 
+            this.Exit.BackColor = System.Drawing.Color.Transparent;
+            this.Exit.Font = new System.Drawing.Font("Microsoft YaHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit.Location = new System.Drawing.Point(990, 616);
+            this.Exit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(206, 62);
+            this.Exit.TabIndex = 4;
+            this.Exit.Text = "Exit";
+            this.Exit.UseVisualStyleBackColor = false;
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
+            // moneydisplay
+            // 
+            this.moneydisplay.AutoSize = true;
+            this.moneydisplay.BackColor = System.Drawing.Color.Transparent;
+            this.moneydisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.moneydisplay.Location = new System.Drawing.Point(1015, 134);
+            this.moneydisplay.Name = "moneydisplay";
+            this.moneydisplay.Size = new System.Drawing.Size(156, 37);
+            this.moneydisplay.TabIndex = 5;
+            this.moneydisplay.Text = "Money : 0";
+            // 
             // frmGameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -85,6 +111,8 @@
             this.BackgroundImage = global::defence_line_form.Properties.Resources.untitled;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.moneydisplay);
+            this.Controls.Add(this.Exit);
             this.Controls.Add(this.healthdisplay);
             this.Controls.Add(this.wavedisplay);
             this.DoubleBuffered = true;
@@ -108,5 +136,7 @@
         private System.Windows.Forms.ToolStripMenuItem waveToolStripMenuItem;
         private System.Windows.Forms.Label wavedisplay;
         private System.Windows.Forms.Label healthdisplay;
+        private System.Windows.Forms.Button Exit;
+        private System.Windows.Forms.Label moneydisplay;
     }
 }

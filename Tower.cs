@@ -73,7 +73,7 @@ namespace defence_line_form
             }
 
             // Set the cooldown based on the attack speed
-            int ticksPerSecond = 60; 
+            int ticksPerSecond = 120; 
             int ticksBetweenShots = Math.Max(1, ticksPerSecond / Math.Max(1, attackSpeed));
             cooldownCount = ticksBetweenShots;
 

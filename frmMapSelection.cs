@@ -44,7 +44,7 @@ namespace defence_line_form
 
         private void Exit_Click(object sender, EventArgs e)
         {
-            this.Close(); // Close the application when the exit button is clicked
+            Application.Exit(); // Close the application when the exit button is clicked
         }
     }
 }

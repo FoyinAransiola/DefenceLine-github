@@ -14,8 +14,9 @@ namespace defence_line_form
         private int currentWaypointIndex = 0;
         private List<waypoint> waypoints;
         private List<string> enemyMovement = new List<string>();
-        int steps = 0; 
+        int steps = 0;
         int slowDownFrameRate = 0;
+        private int health = 3; // this is the health of the enemy, when it reaches 0 the enemy will be destroyed
 
 
 
@@ -132,6 +133,21 @@ namespace defence_line_form
             {
                 g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
             }
+        }
+
+        public int getHealth()
+        {
+            return health;
+        }
+        public void takeDamage(int damage)
+        {
+            health -= damage;
+        }
+
+        public bool isDead()
+        {
+            return health <= 0;
+
         }
 
     }

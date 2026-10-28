@@ -18,6 +18,12 @@ namespace defence_line_form
             this.DoubleBuffered = true;// Enable double buffering to reduce flickering
         }
 
+       
+        private void frmStartScreen_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void Startbutton_Click(object sender, EventArgs e)
         {// This is the event handler for when the start button is clicked
             frmMapSelection frmMapSelection = new frmMapSelection();
@@ -25,14 +31,9 @@ namespace defence_line_form
             this.Hide();// Hide the start screen instead of closing it
         }
 
-        private void frmStartScreen_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Exit_Click(object sender, EventArgs e)
         {
-            this.Close(); // Close the application when the exit button is clicked
+            Application.Exit(); // Close the application when the exit button is clicked
         }
 
         

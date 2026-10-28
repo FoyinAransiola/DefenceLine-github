@@ -17,24 +17,26 @@ namespace defence_line_form
         //List that holds all the waypoints for enemy pathfinding
         private List<waypoint> waypoints;
 
+        // this is the player's health, which decreases when enemies reach the end of the path
         private int health = 2;
 
-        
-        
+        // this is the player's money, which increases when enemies are defeated and decreases when towers are placed
+        private int money = 100;
 
 
-// ENEMY SPAWNING VARIABLES
+
+        // ENEMY SPAWNING VARIABLES
         // list that holds all the enemy objects in the game 
         private List<Enemy> enemies = new List<Enemy>();
 
         // total number of enemies to spawn into the game screen
-        private int totalenemies = 2;
+        private int totalenemies = 10;
 
         // counter to keep track of how many enemies have been spawned into the game screen
         private int spawnedEnemyCount = 0;
 
         // time interval between enemy spawns in game timer ticks (60 ticks = 1second)
-        private int spawnInterval = 120;
+        private int spawnInterval = 60;
 
         // keep track of time passed in game timer ticks to determine when to spawn next enemy
         private int spawnCounter = 0;
@@ -52,6 +54,9 @@ namespace defence_line_form
 
         private Timer gameOverTimer;
 
+        private bool isGameWon = false;
+
+        private Timer gameWonTimer;
 
 
 
@@ -114,7 +119,7 @@ namespace defence_line_form
             {
                 name = "Basic Tower",
                 cost = 100,
-                damage = 10,
+                damage = 1,
                 range =120,
                 attackSpeed = 3,
                 image = Image.FromFile("enemydemo.jpeg"),
@@ -122,9 +127,9 @@ namespace defence_line_form
             });
             towerMenu.Add(new towerMenuItems
             {
-                name = "Basic Tower 2",
+                name = "Sniper Tower ",
                 cost = 100,
-                damage = 100,
+                damage = 3,
                 range =1000,
                 attackSpeed = 1,
                 image = Image.FromFile("enemydemo2.jpeg"),
@@ -155,6 +160,8 @@ namespace defence_line_form
         private void gameTimerEvent(object sender, EventArgs e)
         {
             healthdisplay.Text = "Health: " + health.ToString();
+            moneydisplay.Text = "Money: " + money.ToString();
+
             // spawn enemies if the number of spawned enemies is less than the total number of enemies to spawn
             if (spawnedEnemyCount < totalenemies)
             {
@@ -197,8 +204,15 @@ namespace defence_line_form
                     
                 }
             }
-            if (isGameOver) return; // if the game is over, skip the rest of the game logic
 
+            if (waveCount == waveCounter)
+            {
+                gamewon();
+            }
+
+
+            if (isGameOver) return; // if the game is over, skip the rest of the game logic
+            if (isGameWon) return;
             foreach (Tower tower in placedTowers)
             {
                 projectiles newProjectile = tower.fire(enemies);
@@ -208,15 +222,29 @@ namespace defence_line_form
                 }
             }
 
+            // Move projectiles towards their target enemies
             foreach (projectiles projectile in activeProjectiles)
             {
                 projectile.moveTowardsEnemy();
             }
 
-            for (int i = activeProjectiles.Count - 1; i >= 0; i--)
+            
+            for (int i = activeProjectiles.Count - 1; i >= 0; i--) 
             {
                 if (activeProjectiles[i].hasHitTaregt())
                 {
+                    Enemy target  = activeProjectiles[i].getTargetEnemy();
+
+                    if (target != null)
+                    {
+                        target.takeDamage(activeProjectiles[i].getDamage());
+                        if (target.isDead())
+                        {
+                            money += 5; // increase money when an enemy is defeated
+                            enemies.Remove(target);
+                            target.DisposeImage();
+                        }
+                    }
                     activeProjectiles[i].DisposeImage();
                     activeProjectiles.RemoveAt(i);
 
@@ -238,7 +266,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, waveCounter, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -256,18 +284,42 @@ namespace defence_line_form
             this.Invalidate(); // redraw the form to show the game over message
 
             gameOverTimer = new Timer();
-            gameOverTimer.Interval = 5000;
-            gameOverTimer.Tick += (s, e) =>
+            gameWonTimer.Interval = 5000;
+            gameWonTimer.Tick += (s, e) =>
             {
-                gameOverTimer.Stop();
+                gameWonTimer.Stop();
                 this.Close(); // close the game screen after 5 seconds
                 frmMapSelection mapSelectionForm = new frmMapSelection();
                 mapSelectionForm.Show(); // show the map selection form after the game is over
 
                 this.Close(); // close the game screen after 5 seconds
             };
-            gameOverTimer.Start();
+            gameWonTimer.Start();
 
+        }
+
+
+        private void gamewon()
+        {
+            if (isGameWon) return;
+            isGameWon = true;
+
+            timer1.Stop(); // stop the game timer 
+
+            this.Invalidate(); // redraw the form to show the game over message
+
+            gameWonTimer = new Timer();
+            gameWonTimer.Interval = 5000;
+            gameWonTimer.Tick += (s, e) =>
+            {
+                gameWonTimer.Stop();
+                this.Close(); // close the game screen after 5 seconds
+                frmMapSelection mapSelectionForm = new frmMapSelection();
+                mapSelectionForm.Show(); // show the map selection form after the game has been won
+
+                this.Close(); // close the game screen after 5 seconds
+            };
+            gameWonTimer.Start();
         }
 
 
@@ -365,9 +417,32 @@ namespace defence_line_form
                 }
             }
 
-        }
+            if (isGameWon)
+            {
+                using (SolidBrush greenBrush = new SolidBrush(Color.FromArgb(200, 144, 238, 144)))
+                {
+                    e.Graphics.FillRectangle(greenBrush, this.ClientRectangle);
+                }
 
+                string text = "YOU WON";
+                using (Font font = new Font("Arial", 48, FontStyle.Bold))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                {
+                    SizeF textSize = e.Graphics.MeasureString(text, font);
+                    float x = (this.ClientSize.Width - textSize.Width) / 2;
+                    float y = (this.ClientSize.Height - textSize.Height) / 2;
+                    e.Graphics.DrawString(text, font, textBrush, x, y);
+                }
+            }
+
+        }
         
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            frmMapSelection mapSelectionForm = new frmMapSelection();
+            mapSelectionForm.Show(); // Show the map selection form when the exit button is clicked
+            this.Close(); // Close the game screen when the exit button is clicked
+        }
     }
 }
 

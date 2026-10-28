@@ -97,9 +97,17 @@ namespace defence_line_form
             return distSq <= hitRadius * hitRadius;
         }
 
+
+        public Enemy getTargetEnemy()
+        {
+            return targetEnemy;
+        }
+
         public void Draw(Graphics g)
         {
             g.DrawImage(getImage(), getPositionX(), getPositionY(), getWidth(), getHeight());
         }
+
+        
     }
 }
