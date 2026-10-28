@@ -76,7 +76,7 @@
             this.healthdisplay.Name = "healthdisplay";
             this.healthdisplay.Size = new System.Drawing.Size(145, 37);
             this.healthdisplay.TabIndex = 2;
-            this.healthdisplay.Text = "Health: 3";
+            this.healthdisplay.Text = "Health: 0";
             // 
             // frmGameScreen
             // 

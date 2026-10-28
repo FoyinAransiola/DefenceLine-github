@@ -15,6 +15,7 @@ namespace defence_line_form
         public frmMapSelection()
         {
             InitializeComponent();
+            this.DoubleBuffered = true; // Enable double buffering to reduce flickering
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -23,9 +24,27 @@ namespace defence_line_form
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
-        {
+        {// This is the event handler for when the first map picture box is clicked
             frmGameScreen frmGameScreen = new frmGameScreen();
             frmGameScreen.Show();
+            this.Close();// Close the map selection screen
+        }
+
+        private void frmMapSelection_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void Back_Click(object sender, EventArgs e)
+        {
+            frmStartScreen frmStartScreen = new frmStartScreen();
+            frmStartScreen.Show();
+            this.Close();
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            this.Close(); // Close the application when the exit button is clicked
         }
     }
 }

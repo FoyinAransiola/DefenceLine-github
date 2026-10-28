@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.Startbutton = new System.Windows.Forms.Button();
+            this.Exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -38,32 +39,48 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Old English Text MT", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(124, 9);
+            this.label1.Location = new System.Drawing.Point(186, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(570, 114);
+            this.label1.Size = new System.Drawing.Size(849, 171);
             this.label1.TabIndex = 0;
             this.label1.Text = "Defence Line";
             // 
             // Startbutton
             // 
             this.Startbutton.Font = new System.Drawing.Font("Microsoft YaHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Startbutton.Location = new System.Drawing.Point(317, 269);
+            this.Startbutton.Location = new System.Drawing.Point(476, 414);
+            this.Startbutton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Startbutton.Name = "Startbutton";
-            this.Startbutton.Size = new System.Drawing.Size(137, 40);
+            this.Startbutton.Size = new System.Drawing.Size(206, 62);
             this.Startbutton.TabIndex = 1;
             this.Startbutton.Text = "Start";
             this.Startbutton.UseVisualStyleBackColor = true;
             this.Startbutton.Click += new System.EventHandler(this.Startbutton_Click);
             // 
+            // Exit
+            // 
+            this.Exit.Font = new System.Drawing.Font("Microsoft YaHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit.Location = new System.Drawing.Point(476, 486);
+            this.Exit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(206, 62);
+            this.Exit.TabIndex = 2;
+            this.Exit.Text = "Exit";
+            this.Exit.UseVisualStyleBackColor = true;
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
             // frmStartScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::defence_line_form.Properties.Resources.defencelinebg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.Exit);
             this.Controls.Add(this.Startbutton);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmStartScreen";
             this.Text = "Start Screen";
             this.Load += new System.EventHandler(this.frmStartScreen_Load);
@@ -76,5 +93,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Startbutton;
+        private System.Windows.Forms.Button Exit;
     }
 }

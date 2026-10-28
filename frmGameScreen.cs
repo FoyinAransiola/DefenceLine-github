@@ -17,7 +17,10 @@ namespace defence_line_form
         //List that holds all the waypoints for enemy pathfinding
         private List<waypoint> waypoints;
 
-        private int health = 3;
+        private int health = 2;
+
+        
+        
 
 
 // ENEMY SPAWNING VARIABLES
@@ -36,17 +39,24 @@ namespace defence_line_form
         // keep track of time passed in game timer ticks to determine when to spawn next enemy
         private int spawnCounter = 0;
 
+// WAVE VARIABLES
         //this is used to keep track of how many waves of enemies have been spawned and how many waves are in the game
         private int waveCount = 3;
 
         // this is used to keep track of the current wave number
         private int waveCounter = 1;
 
+// Health and Game Over Variables
+        // this is used to determine if the game is over and the player has lost all their health
+        private bool isGameOver = false;
+
+        private Timer gameOverTimer;
 
 
 
 
-// TOWER PLACEMENT VARIABLES
+
+        // TOWER PLACEMENT VARIABLES
         private struct towerMenuItems // struct to hold tower menu item information
         {
             public string name;
@@ -144,6 +154,7 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
+            healthdisplay.Text = "Health: " + health.ToString();
             // spawn enemies if the number of spawned enemies is less than the total number of enemies to spawn
             if (spawnedEnemyCount < totalenemies)
             {
@@ -160,15 +171,10 @@ namespace defence_line_form
             }
 
 
-
-
-
-
-
-                foreach (Enemy enemy in enemies)
-                {
-                    enemy.move(); // moves each enemy along path using waypoints
-                }
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.move(); // moves each enemy along path using waypoints
+            }
 
             //Remove enemies that reached the final waypoint and dispose their images
             for (int i = enemies.Count - 1; i >= 0; i--)
@@ -178,10 +184,20 @@ namespace defence_line_form
                     enemies[i].DisposeImage();
                     enemies.RemoveAt(i);
 
-                    health--; // decrease health when an enemy reaches the end
-                    healthdisplay.Text = "Health: " + health.ToString();// update health display
+                    if (!isGameOver)// check if the game is not already over before decreasing health
+                    {
+                        health--; // decrease health when an enemy reaches the end
+                        healthdisplay.Text = "Health: " + health.ToString();// update health display
+
+                        if (health <= 0)
+                        {
+                            gameOver();
+                        }
+                    }
+                    
                 }
             }
+            if (isGameOver) return; // if the game is over, skip the rest of the game logic
 
             foreach (Tower tower in placedTowers)
             {
@@ -232,13 +248,26 @@ namespace defence_line_form
 
         private void gameOver()// this method is called when the player runs out of health and the game is over
         {
-            if (health <= 0)
+            if (isGameOver) return; // prevent multiple game over triggers
+            isGameOver = true;
+
+            timer1.Stop(); // stop the game timer 
+
+            this.Invalidate(); // redraw the form to show the game over message
+
+            gameOverTimer = new Timer();
+            gameOverTimer.Interval = 5000;
+            gameOverTimer.Tick += (s, e) =>
             {
-            MessageBox.Show("Game Over! You have run out of health.");
-            this.Close(); // close the game screen form
-            frmMapSelection frmMapSelection = new frmMapSelection();
-            frmMapSelection.Show();
-            }
+                gameOverTimer.Stop();
+                this.Close(); // close the game screen after 5 seconds
+                frmMapSelection mapSelectionForm = new frmMapSelection();
+                mapSelectionForm.Show(); // show the map selection form after the game is over
+
+                this.Close(); // close the game screen after 5 seconds
+            };
+            gameOverTimer.Start();
+
         }
 
 
@@ -315,6 +344,25 @@ namespace defence_line_form
             foreach (projectiles projectile in activeProjectiles)
             {
                 projectile.Draw(e.Graphics);
+            }
+
+
+            if (isGameOver)
+            {
+                using (SolidBrush redBrush = new SolidBrush(Color.FromArgb(200, 180, 0, 0)))
+                {
+                    e.Graphics.FillRectangle(redBrush, this.ClientRectangle);
+                }
+
+                string text = "GAME OVER";
+                using (Font font = new Font("Arial", 48, FontStyle.Bold))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                {
+                    SizeF textSize = e.Graphics.MeasureString(text, font);
+                    float x = (this.ClientSize.Width - textSize.Width) / 2;
+                    float y = (this.ClientSize.Height - textSize.Height) / 2;
+                    e.Graphics.DrawString(text, font, textBrush, x, y);
+                }
             }
 
         }
