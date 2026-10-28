@@ -59,31 +59,23 @@ namespace defence_line_form
             AnimationDirection(getCurrentDirection());
 
 
-            // Moving left or right towards target(waypoint)
-            if (getPositionX() < target.coordinateX)
+            int velocityX = target.coordinateX - getPositionX();
+            int velocityY = target.coordinateY - getPositionY();
+
+            if (velocityX != 0)
             {
-                setPositionX(getPositionX() + getSpeed());
+                int moveX = Math.Sign(velocityX) * Math.Min(Math.Abs(velocityX), getSpeed());
+                setPositionX(getPositionX() + moveX);
             }
-            else if (getPositionX() > target.coordinateX)
+            if (velocityY != 0)
             {
-                setPositionX(getPositionX() - getSpeed());
+                int moveY = Math.Sign(velocityY) * Math.Min(Math.Abs(velocityY), getSpeed());
+                setPositionY(getPositionY() + moveY);
             }
 
-            // Moving up or down towards target(waypoint) 
-            if (getPositionY() < target.coordinateY)
+            if (getPositionX() == target.coordinateX && getPositionY() == target.coordinateY)
             {
-                setPositionY(getPositionY() + getSpeed());
-            }
-            else if (getPositionY() > target.coordinateY)
-            {
-                setPositionY(getPositionY() - getSpeed());
-            }
-
-            // checking is enemy sprite has reached waypoint         
-            if (getPositionX() >= target.coordinateX - 3 && getPositionX() <= target.coordinateX + 3 &&
-                getPositionY() >= target.coordinateY - 3 && getPositionY() <= target.coordinateY + 3)
-            {
-                currentWaypointIndex = currentWaypointIndex + 1;
+                currentWaypointIndex++;
             }
         }
 

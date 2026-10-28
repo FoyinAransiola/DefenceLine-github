@@ -159,8 +159,8 @@ namespace defence_line_form
 
         private void gameTimerEvent(object sender, EventArgs e)
         {
-            healthdisplay.Text = "Health: " + health.ToString();
-            moneydisplay.Text = "Money: " + money.ToString();
+            healthdisplay.Text = "Health: " + health.ToString();// update health display
+            moneydisplay.Text = "Money: " + money.ToString();// update money display
 
             // spawn enemies if the number of spawned enemies is less than the total number of enemies to spawn
             if (spawnedEnemyCount < totalenemies)
@@ -205,14 +205,16 @@ namespace defence_line_form
                 }
             }
 
-            if (waveCount == waveCounter)
+
+            if (isGameOver) return; // if the game is over, skip the rest of the game logic
+
+
+            if (!isGameOver && !isGameWon && waveCounter >= waveCount && spawnedEnemyCount >= totalenemies)
             {
-                gamewon();
+                gamewon(); // call the gamewon method if all waves have been completed and all enemies have been defeated
             }
 
 
-            if (isGameOver) return; // if the game is over, skip the rest of the game logic
-            if (isGameWon) return;
             foreach (Tower tower in placedTowers)
             {
                 projectiles newProjectile = tower.fire(enemies);
@@ -266,7 +268,7 @@ namespace defence_line_form
                 spawnCounter++; // incremented every tick
                 if (spawnCounter >= spawnInterval)// once spawn counter reaches spawn interval new enemy is spawned
                 {
-                    enemies.Add(new Enemy(0, 223, 65, 65, waveCounter, waypoints)); // spawn new enemy at starting position 
+                    enemies.Add(new Enemy(0, 223, 65, 65, 2, waypoints)); // spawn new enemy at starting position 
                     spawnedEnemyCount++;
                     spawnCounter = 0; //reset spawn counter after spawning an enemy (resets clock)
                 }
@@ -276,36 +278,34 @@ namespace defence_line_form
 
         private void gameOver()// this method is called when the player runs out of health and the game is over
         {
-            if (isGameOver) return; // prevent multiple game over triggers
+            if (isGameOver || isGameWon) return; // prevent multiple game over triggers
             isGameOver = true;
 
             timer1.Stop(); // stop the game timer 
-
             this.Invalidate(); // redraw the form to show the game over message
 
             gameOverTimer = new Timer();
-            gameWonTimer.Interval = 5000;
-            gameWonTimer.Tick += (s, e) =>
+            gameOverTimer.Interval = 5000;
+            gameOverTimer.Tick += (s, e) =>
             {
-                gameWonTimer.Stop();
+                gameOverTimer.Stop();
                 this.Close(); // close the game screen after 5 seconds
                 frmMapSelection mapSelectionForm = new frmMapSelection();
                 mapSelectionForm.Show(); // show the map selection form after the game is over
 
                 this.Close(); // close the game screen after 5 seconds
             };
-            gameWonTimer.Start();
+            gameOverTimer.Start();
 
         }
 
 
         private void gamewon()
         {
-            if (isGameWon) return;
+            if (isGameOver || isGameWon) return; // prevent multiple game over triggers
             isGameWon = true;
 
-            timer1.Stop(); // stop the game timer 
-
+            timer1.Stop(); // stop the game timer       
             this.Invalidate(); // redraw the form to show the game over message
 
             gameWonTimer = new Timer();
